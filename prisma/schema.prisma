@@ -35,6 +35,103 @@ model Post {
   authorId  String?
 }
 
+model Customer {
+  id                                         String   @id @default(cuid())
+  name                                       String
+  photoPrimary                               String?
+  notes                                      String?
+  facilities                                 Facility[]
+}
+
+model Facility {
+  id                                         String   @id @default(cuid())
+  name                                       String
+  license                                    String?
+  contactName                                String?
+  phone                                      String?
+  email                                      String?
+  address1                                   String?
+  address2                                   String?
+  city                                       String?
+  state                                      String?
+  zip                                        String?
+  county                                     String?
+  notes                                      String?
+  customer                                   Customer   @relation(fields: [customerId], references: [id])
+  customerId                                 String
+  orders                                     Order[]
+}
+
+model LabTest {
+  labTestResultId          String   @id @default(cuid())
+  labFacilityLicenseNumber String?
+  labFacilityName          String?
+  sourcePackageLabel       String?
+  productName              String?
+  productCategoryName      String?
+  testPerformedDate        DateTime?
+  testPassed               Boolean?  @default(false)
+  testComment              String?
+  thcPercent               Float?
+  cbdPercent               String?
+  terpenePercent           Float?
+  testBatch                String?
+  harvestDate              DateTime?
+  labTestExternalId        String?
+  producerLicenseName      String?
+  producerLicenseNumber    String?
+  harvestLocation          String?
+  stock                    Stock[]
+  current                  Boolean   @default(false)
+}
+
+model LineItem {
+  id                          String   @id @default(cuid())
+  strain                      String
+  itemType                    String
+  quantity                    Float
+  ppu                         Float
+  stockId                     String?
+  stock                       Stock?                        @relation(fields: [stockId], references: [id])
+  order                       Order?                        @relation(fields: [orderId], references: [id])
+  orderId                     String?
+  packedStatus                Boolean                       @default(false)
+}
+
+model Order {
+  id                          String   @id @default(cuid())
+  createdDate                 DateTime                      @default(now())
+  scheduledPackDate           DateTime?
+  scheduledShipDate           DateTime?
+  dateDelivered               DateTime?
+  status                      Status
+  notes                       String?
+  facility                    Facility                     @relation(fields: [facilityId], references: [id])
+  facilityId                  String
+  lineItems                   LineItem[]
+}
+
+model Stock {
+  id           String   @id @default(cuid())
+  strain       String
+  itemType     String
+  quantity     Float?
+  uom          String?
+  priceDefault Float?
+  labTest      LabTest   @relation(fields: [labTestId], references: [labTestResultId])
+  labTestId    String
+  lineItem     LineItem[]
+}
+
+enum Status {
+  OPEN
+  PACKED
+  SHIPPED
+  DELIVERED
+  CLOSED
+  COMPLETED
+}
+
 enum Role {
   ADMIN
   USER

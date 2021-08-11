@@ -25,9 +25,116 @@ Table Post {
   authorId String
 }
 
+Table Customer {
+  id String [pk]
+  name String [not null]
+  photoPrimary String
+  notes String
+  facilities Facility [not null]
+}
+
+Table Facility {
+  id String [pk]
+  name String [not null]
+  license String
+  contactName String
+  phone String
+  email String
+  address1 String
+  address2 String
+  city String
+  state String
+  zip String
+  county String
+  notes String
+  customer Customer [not null]
+  customerId String [not null]
+  orders Order [not null]
+}
+
+Table LabTest {
+  labTestResultId String [pk]
+  labFacilityLicenseNumber String
+  labFacilityName String
+  sourcePackageLabel String
+  productName String
+  productCategoryName String
+  testPerformedDate DateTime
+  testPassed Boolean [default: false]
+  testComment String
+  thcPercent Float
+  cbdPercent String
+  terpenePercent Float
+  testBatch String
+  harvestDate DateTime
+  labTestExternalId String
+  producerLicenseName String
+  producerLicenseNumber String
+  harvestLocation String
+  stock Stock [not null]
+  current Boolean [not null, default: false]
+}
+
+Table LineItem {
+  id String [pk]
+  strain String [not null]
+  itemType String [not null]
+  quantity Float [not null]
+  ppu Float [not null]
+  stockId String
+  stock Stock
+  order Order
+  orderId String
+  packedStatus Boolean [not null, default: false]
+}
+
+Table Order {
+  id String [pk]
+  createdDate DateTime [default: `now()`, not null]
+  scheduledPackDate DateTime
+  scheduledShipDate DateTime
+  dateDelivered DateTime
+  status Status [not null]
+  notes String
+  facility Facility [not null]
+  facilityId String [not null]
+  lineItems LineItem [not null]
+}
+
+Table Stock {
+  id String [pk]
+  strain String [not null]
+  itemType String [not null]
+  quantity Float
+  uom String
+  priceDefault Float
+  labTest LabTest [not null]
+  labTestId String [not null]
+  lineItem LineItem [not null]
+}
+
+Enum Status {
+  OPEN
+  PACKED
+  SHIPPED
+  DELIVERED
+  CLOSED
+  COMPLETED
+}
+
 Enum Role {
   ADMIN
   USER
 }
 
 Ref: Post.authorId > User.id
+
+Ref: Facility.customerId > Customer.id
+
+Ref: LineItem.stockId > Stock.id
+
+Ref: LineItem.orderId > Order.id
+
+Ref: Order.facilityId > Facility.id
+
+Ref: Stock.labTestId > LabTest.labTestResultId
