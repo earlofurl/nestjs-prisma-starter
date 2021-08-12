@@ -11,6 +11,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import config from './configs/config';
 import { GraphqlConfig } from './configs/config.interface';
 import { CustomerModule } from './customer/customer.module';
+import { FacilityModule } from './facility/facility.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { CustomerModule } from './customer/customer.module';
     UserModule,
     PostModule,
     CustomerModule,
+    FacilityModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver, DateScalar],

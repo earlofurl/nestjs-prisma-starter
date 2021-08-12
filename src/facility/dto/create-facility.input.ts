@@ -1,7 +1,7 @@
 import { InputType, Field, ID } from '@nestjs/graphql';
 
 @InputType()
-export class CreateCustomerInput {
+export class CreateFacilityInput {
   @Field((type) => ID)
   id?: string;
   @Field({
@@ -14,7 +14,19 @@ export class CreateCustomerInput {
   })
   updatedAt?: Date;
   name: string;
-  photoPrimary?: string;
+  license?: string;
+  primaryContactName?: string;
+  primaryPhone?: string;
+  primaryEmail?: string;
+  address1?: string;
+  address2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  county?: string;
   notes?: string;
-  //  TODO: Add facility
+  customerId: string;
+  // TODO: Implement orders and contacts after resources are added.
+  // orders
+  // contacts
 }

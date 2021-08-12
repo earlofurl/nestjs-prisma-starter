@@ -16,13 +16,84 @@ input ChangePasswordInput {
   oldPassword: String!
 }
 
+input CreateCustomerInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  id: ID
+  name: String!
+  notes: String
+  photoPrimary: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
+input CreateFacilityInput {
+  address1: String
+  address2: String
+  city: String
+  county: String
+
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  customerId: String!
+  id: ID
+  license: String
+  name: String!
+  notes: String
+  primaryContactName: String
+  primaryEmail: String
+  primaryPhone: String
+  state: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+  zip: String
+}
+
 input CreatePostInput {
   content: String!
   title: String!
 }
 
+type Customer {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  facilities: [Facility]
+  id: ID!
+  name: String!
+  notes: String
+  photoPrimary: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+}
+
 """Date custom scalar type"""
 scalar Date
+
+type Facility {
+  address1: String
+  address2: String
+  city: String
+  county: String
+
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  customerId: String!
+  id: ID!
+  license: String
+  name: String!
+  notes: String
+  primaryContactName: String
+  primaryEmail: String
+  primaryPhone: String
+  state: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+  zip: String
+}
 
 input LoginInput {
   email: String!
@@ -31,10 +102,16 @@ input LoginInput {
 
 type Mutation {
   changePassword(data: ChangePasswordInput!): User!
+  createCustomer(createCustomerInput: CreateCustomerInput!): Customer!
+  createFacility(createFacilityInput: CreateFacilityInput!): Facility!
   createPost(data: CreatePostInput!): Post!
   login(data: LoginInput!): Auth!
   refreshToken(token: String!): Token!
+  removeCustomer(removeOneCustomerInput: String!): Customer!
+  removeFacility(removeOneFacilityInput: String!): Facility!
   signup(data: SignupInput!): Auth!
+  updateCustomer(updateCustomerInput: UpdateCustomerInput!): Customer!
+  updateFacility(updateFacilityInput: UpdateFacilityInput!): Facility!
   updateUser(data: UpdateUserInput!): User!
 }
 
@@ -94,6 +171,10 @@ enum PostOrderField {
 }
 
 type Query {
+  customer(findOneCustomerInput: String!): Customer!
+  customers: [Customer!]!
+  facilities: [Facility!]!
+  facility(findOneFacilityInput: String!): Facility!
   hello(name: String!): String!
   helloWorld: String!
   me: User!
@@ -125,6 +206,41 @@ type Token {
 
   """JWT refresh token"""
   refreshToken: String!
+}
+
+input UpdateCustomerInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  id: ID
+  name: String
+  notes: String
+  photoPrimary: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
+input UpdateFacilityInput {
+  address1: String
+  address2: String
+  city: String
+  county: String
+
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  customerId: String
+  id: ID
+  license: String
+  name: String
+  notes: String
+  primaryContactName: String
+  primaryEmail: String
+  primaryPhone: String
+  state: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+  zip: String
 }
 
 input UpdateUserInput {
