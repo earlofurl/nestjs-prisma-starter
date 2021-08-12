@@ -37,6 +37,8 @@ model Post {
 
 model Customer {
   id                                         String   @id @default(cuid())
+  createdAt                                  DateTime @default(now())
+  updatedAt                                  DateTime @updatedAt
   name                                       String
   photoPrimary                               String?
   notes                                      String?
@@ -45,6 +47,8 @@ model Customer {
 
 model Facility {
   id                                         String   @id @default(cuid())
+  createdAt                                  DateTime @default(now())
+  updatedAt                                  DateTime @updatedAt
   name                                       String
   license                                    String?
   contactName                                String?
@@ -64,6 +68,8 @@ model Facility {
 
 model LabTest {
   labTestResultId          String   @id @default(cuid())
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
   labFacilityLicenseNumber String?
   labFacilityName          String?
   sourcePackageLabel       String?
@@ -87,6 +93,8 @@ model LabTest {
 
 model LineItem {
   id                          String   @id @default(cuid())
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
   strain                      String
   itemType                    String
   quantity                    Float
@@ -100,7 +108,8 @@ model LineItem {
 
 model Order {
   id                          String   @id @default(cuid())
-  createdDate                 DateTime                      @default(now())
+  createdAt                                  DateTime @default(now())
+  updatedAt                                  DateTime @updatedAt
   scheduledPackDate           DateTime?
   scheduledShipDate           DateTime?
   dateDelivered               DateTime?
@@ -113,6 +122,8 @@ model Order {
 
 model Stock {
   id           String   @id @default(cuid())
+  createdAt                                  DateTime @default(now())
+  updatedAt                                  DateTime @updatedAt
   strain       String
   itemType     String
   quantity     Float?
