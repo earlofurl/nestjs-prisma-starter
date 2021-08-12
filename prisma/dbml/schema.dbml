@@ -27,6 +27,8 @@ Table Post {
 
 Table Customer {
   id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
   name String [not null]
   photoPrimary String
   notes String
@@ -35,6 +37,8 @@ Table Customer {
 
 Table Facility {
   id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
   name String [not null]
   license String
   contactName String
@@ -54,6 +58,8 @@ Table Facility {
 
 Table LabTest {
   labTestResultId String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
   labFacilityLicenseNumber String
   labFacilityName String
   sourcePackageLabel String
@@ -77,6 +83,8 @@ Table LabTest {
 
 Table LineItem {
   id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
   strain String [not null]
   itemType String [not null]
   quantity Float [not null]
@@ -90,7 +98,8 @@ Table LineItem {
 
 Table Order {
   id String [pk]
-  createdDate DateTime [default: `now()`, not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
   scheduledPackDate DateTime
   scheduledShipDate DateTime
   dateDelivered DateTime
@@ -103,6 +112,8 @@ Table Order {
 
 Table Stock {
   id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
   strain String [not null]
   itemType String [not null]
   quantity Float
