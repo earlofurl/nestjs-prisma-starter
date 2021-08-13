@@ -10,6 +10,6 @@ export class Customer extends BaseModel {
   // TODO: add import when adding Facility later. Scaffold customer resource first.
   // @Field(type => [Facility])
   // facilities?: Facility[];
-  @Field(type => [Facility], {nullable: 'itemsAndList'})
+  @Field((type) => [Facility], { nullable: 'itemsAndList' })
   facilities?: Facility[];
 }
