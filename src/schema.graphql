@@ -16,6 +16,34 @@ input ChangePasswordInput {
   oldPassword: String!
 }
 
+type Contact {
+  emailAddress: String
+  facilityId: String!
+  firstName: String!
+  lastName: String!
+  notes: String
+  primaryPhone: String
+  pronouns: String
+  secondaryPhone: String
+}
+
+input CreateContactInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  emailAddress: String
+  facilityId: String!
+  firstName: String!
+  id: ID
+  lastName: String!
+  notes: String
+  primaryPhone: String
+  pronouns: String
+  secondaryPhone: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
 input CreateCustomerInput {
   """Identifies the date and time when the object was created."""
   createdAt: Date
@@ -102,14 +130,17 @@ input LoginInput {
 
 type Mutation {
   changePassword(data: ChangePasswordInput!): User!
+  createContact(createContactInput: CreateContactInput!): Contact!
   createCustomer(createCustomerInput: CreateCustomerInput!): Customer!
   createFacility(createFacilityInput: CreateFacilityInput!): Facility!
   createPost(data: CreatePostInput!): Post!
   login(data: LoginInput!): Auth!
   refreshToken(token: String!): Token!
+  removeContact(removeOneContactInput: String!): Contact!
   removeCustomer(removeOneCustomerInput: String!): Customer!
   removeFacility(removeOneFacilityInput: String!): Facility!
   signup(data: SignupInput!): Auth!
+  updateContact(updateContactInput: UpdateContactInput!): Contact!
   updateCustomer(updateCustomerInput: UpdateCustomerInput!): Customer!
   updateFacility(updateFacilityInput: UpdateFacilityInput!): Facility!
   updateUser(data: UpdateUserInput!): User!
@@ -171,6 +202,8 @@ enum PostOrderField {
 }
 
 type Query {
+  contact(findOneContactInput: String!): Contact!
+  contacts: [Contact!]!
   customer(findOneCustomerInput: String!): Customer!
   customers: [Customer!]!
   facilities: [Facility!]!
@@ -206,6 +239,23 @@ type Token {
 
   """JWT refresh token"""
   refreshToken: String!
+}
+
+input UpdateContactInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  emailAddress: String
+  facilityId: String
+  firstName: String
+  id: ID
+  lastName: String
+  notes: String
+  primaryPhone: String
+  pronouns: String
+  secondaryPhone: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
 }
 
 input UpdateCustomerInput {

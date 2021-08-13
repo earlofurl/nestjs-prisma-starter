@@ -12,6 +12,7 @@ import config from './configs/config';
 import { GraphqlConfig } from './configs/config.interface';
 import { CustomerModule } from './customer/customer.module';
 import { FacilityModule } from './facility/facility.module';
+import { ContactModule } from './contact/contact.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { FacilityModule } from './facility/facility.module';
     PostModule,
     CustomerModule,
     FacilityModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver, DateScalar],
