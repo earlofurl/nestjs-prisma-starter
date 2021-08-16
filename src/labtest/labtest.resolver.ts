@@ -19,7 +19,7 @@ export class LabtestResolver {
     return this.labtestService.create(createLabtestInput);
   }
 
-  @Query(() => [Labtest], { name: 'labtest' })
+  @Query(() => [Labtest], { name: 'labtests' })
   findAll() {
     return this.labtestService.findAll();
   }
