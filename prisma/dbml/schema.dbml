@@ -135,9 +135,9 @@ Table Stock {
   quantity Float
   uom String
   priceDefault Float
-  labTest LabTest [not null]
-  labTestId String [not null]
-  lineItem LineItem [not null]
+  labTest LabTest
+  labTestId String
+  lineItems LineItem [not null]
 }
 
 Enum Status {

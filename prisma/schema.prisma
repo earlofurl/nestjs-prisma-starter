@@ -145,9 +145,9 @@ model Stock {
   quantity     Float?
   uom          String?
   priceDefault Float?
-  labTest      LabTest   @relation(fields: [labTestId], references: [labTestResultId])
-  labTestId    String
-  lineItem     LineItem[]
+  labTest      LabTest?   @relation(fields: [labTestId], references: [labTestResultId])
+  labTestId    String?
+  lineItems     LineItem[]
 }
 
 enum Status {

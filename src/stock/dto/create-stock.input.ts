@@ -1,8 +1,7 @@
 import { InputType, Field, ID } from '@nestjs/graphql';
-import { Facility } from '../../facility/entities/facility.entity';
 
 @InputType()
-export class CreateCustomerInput {
+export class CreateStockInput {
   @Field((type) => ID)
   id?: string;
   @Field({
@@ -14,9 +13,11 @@ export class CreateCustomerInput {
       'Identifies the date and time when the object was last updated.',
   })
   updatedAt?: Date;
-  name: string;
-  photoPrimary?: string;
-  notes?: string;
-  // @Field(() => Facility)
-  // facility: Facility;
+  strain: string;
+  itemType: string;
+  quantity?: number;
+  uom?: string;
+  priceDefault?: number;
+  labTestId?: string;
+  // TODO: Add lineItems to object when lineItem resource created.
 }

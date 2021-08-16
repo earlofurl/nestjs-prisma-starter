@@ -14,6 +14,9 @@ import { CustomerModule } from './customer/customer.module';
 import { FacilityModule } from './facility/facility.module';
 import { ContactModule } from './contact/contact.module';
 import { LabtestModule } from './labtest/labtest.module';
+import { StockModule } from './stock/stock.module';
+import { OrderModule } from './order/order.module';
+import { LineitemModule } from './lineitem/lineitem.module';
 
 @Module({
   imports: [
@@ -43,6 +46,9 @@ import { LabtestModule } from './labtest/labtest.module';
     FacilityModule,
     ContactModule,
     LabtestModule,
+    StockModule,
+    OrderModule,
+    LineitemModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver, DateScalar],

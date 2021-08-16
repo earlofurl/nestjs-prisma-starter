@@ -1,8 +1,8 @@
 import { InputType, Field, ID } from '@nestjs/graphql';
-import { Facility } from '../../facility/entities/facility.entity';
+import { Status } from '../entities/order.entity';
 
 @InputType()
-export class CreateCustomerInput {
+export class CreateOrderInput {
   @Field((type) => ID)
   id?: string;
   @Field({
@@ -14,9 +14,11 @@ export class CreateCustomerInput {
       'Identifies the date and time when the object was last updated.',
   })
   updatedAt?: Date;
-  name: string;
-  photoPrimary?: string;
+  scheduledPackDate?: Date;
+  scheduledShipDate?: Date;
+  dateDelivered?: Date;
+  status: Status;
   notes?: string;
-  // @Field(() => Facility)
-  // facility: Facility;
+  facilityId: string;
+  // TODO: add lineItems
 }
