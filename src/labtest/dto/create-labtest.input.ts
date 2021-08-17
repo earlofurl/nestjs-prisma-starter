@@ -30,7 +30,6 @@ export class CreateLabtestInput {
   producerLicenseName?: string;
   producerLicenseNumber?: string;
   harvestLocation?: string;
-  // TODO: Add stock field when stock resource is added.
   // stock: Stock[];
   current: boolean;
 }

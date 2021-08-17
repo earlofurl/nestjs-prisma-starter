@@ -1,4 +1,6 @@
 import { InputType, Field, ID } from '@nestjs/graphql';
+import { Order } from '../../order/entities/order.entity';
+import { Contact } from '../../contact/entities/contact.entity';
 
 @InputType()
 export class CreateFacilityInput {
@@ -26,7 +28,4 @@ export class CreateFacilityInput {
   county?: string;
   notes?: string;
   customerId: string;
-  // TODO: Implement orders and contacts after resources are added.
-  // orders
-  // contacts
 }

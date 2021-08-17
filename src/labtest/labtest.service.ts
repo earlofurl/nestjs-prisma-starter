@@ -34,7 +34,7 @@ export class LabtestService {
     return this.prisma.labTest.update({
       data: updateLabtestInput,
       where: {
-        labTestResultId: id,
+        id: id,
       },
     });
   }

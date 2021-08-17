@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { CustomerService } from './customer.service';
 import { Customer } from './entities/customer.entity';
 import { CreateCustomerInput } from './dto/create-customer.input';
@@ -6,11 +13,15 @@ import { UpdateCustomerInput } from './dto/update-customer.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../guards/gql-auth.guard';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Resolver(() => Customer)
 @UseGuards(GqlAuthGuard)
 export class CustomerResolver {
-  constructor(private readonly customerService: CustomerService) {}
+  constructor(
+    private customerService: CustomerService,
+    private prisma: PrismaService
+  ) {}
 
   @Mutation(() => Customer)
   createCustomer(
@@ -48,5 +59,12 @@ export class CustomerResolver {
     removeOneCustomerInput: Prisma.CustomerWhereUniqueInput
   ) {
     return this.customerService.remove(removeOneCustomerInput);
+  }
+
+  @ResolveField('facilities')
+  facilities(@Parent() customer: Customer) {
+    return this.prisma.customer
+      .findUnique({ where: { id: customer.id } })
+      .facilities();
   }
 }

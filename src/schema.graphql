@@ -79,9 +79,83 @@ input CreateFacilityInput {
   zip: String
 }
 
+input CreateLabtestInput {
+  cbdPercent: String
+
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  current: Boolean!
+  harvestDate: Date
+  harvestLocation: String
+  id: ID
+  labFacilityLicenseNumber: String
+  labFacilityName: String
+  labTestExternalId: String
+  producerLicenseName: String
+  producerLicenseNumber: String
+  productCategoryName: String
+  productName: String
+  sourcePackageLabel: String
+  terpenePercent: Int
+  testBatch: String
+  testComment: String
+  testPassed: Boolean
+  testPerformedDate: Date
+  thcPercent: Int
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
+input CreateLineitemInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  id: ID
+  itemType: String!
+  orderId: String
+  packedStatus: Boolean!
+  ppu: Int!
+  quantity: Int!
+  stockId: String
+  strain: String!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
+input CreateOrderInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  dateDelivered: Date
+  facilityId: String!
+  id: ID
+  notes: String
+  scheduledPackDate: Date
+  scheduledShipDate: Date
+  status: Status!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
 input CreatePostInput {
   content: String!
   title: String!
+}
+
+input CreateStockInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  id: ID
+  itemType: String!
+  labTestId: String
+  priceDefault: Int
+  quantity: Int
+  strain: String!
+  uom: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
 }
 
 type Customer {
@@ -104,6 +178,7 @@ type Facility {
   address1: String
   address2: String
   city: String
+  contacts: [Contact]
   county: String
 
   """Identifies the date and time when the object was created."""
@@ -113,6 +188,7 @@ type Facility {
   license: String
   name: String!
   notes: String
+  orders: [Order]
   primaryContactName: String
   primaryEmail: String
   primaryPhone: String
@@ -121,6 +197,51 @@ type Facility {
   """Identifies the date and time when the object was last updated."""
   updatedAt: Date!
   zip: String
+}
+
+type Labtest {
+  cbdPercent: String
+
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  current: Boolean!
+  harvestDate: Date
+  harvestLocation: String
+  id: ID!
+  labFacilityLicenseNumber: String
+  labFacilityName: String
+  labTestExternalId: String
+  producerLicenseName: String
+  producerLicenseNumber: String
+  productCategoryName: String
+  productName: String
+  sourcePackageLabel: String
+  stock: [Stock]
+  terpenePercent: Int
+  testBatch: String
+  testComment: String
+  testPassed: Boolean
+  testPerformedDate: Date
+  thcPercent: Int
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+}
+
+type Lineitem {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  id: ID!
+  itemType: String!
+  orderId: String
+  packedStatus: Boolean!
+  ppu: Int!
+  quantity: Int!
+  stockId: String
+  strain: String!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
 }
 
 input LoginInput {
@@ -133,17 +254,45 @@ type Mutation {
   createContact(createContactInput: CreateContactInput!): Contact!
   createCustomer(createCustomerInput: CreateCustomerInput!): Customer!
   createFacility(createFacilityInput: CreateFacilityInput!): Facility!
+  createLabtest(createLabtestInput: CreateLabtestInput!): Labtest!
+  createLineitem(createLineitemInput: CreateLineitemInput!): Lineitem!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
   createPost(data: CreatePostInput!): Post!
+  createStock(createStockInput: CreateStockInput!): Stock!
   login(data: LoginInput!): Auth!
   refreshToken(token: String!): Token!
   removeContact(removeOneContactInput: String!): Contact!
   removeCustomer(removeOneCustomerInput: String!): Customer!
   removeFacility(removeOneFacilityInput: String!): Facility!
+  removeLabtest(removeLabtestInput: String!): Labtest!
+  removeLineitem(removeOneLineItemInput: String!): Lineitem!
+  removeOrder(removeOneCustomerInput: String!): Order!
+  removeStock(removeOneStockInput: String!): Stock!
   signup(data: SignupInput!): Auth!
   updateContact(updateContactInput: UpdateContactInput!): Contact!
   updateCustomer(updateCustomerInput: UpdateCustomerInput!): Customer!
   updateFacility(updateFacilityInput: UpdateFacilityInput!): Facility!
+  updateLabtest(updateLabtestInput: UpdateLabtestInput!): Labtest!
+  updateLineitem(updateLineitemInput: UpdateLineitemInput!): Lineitem!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  updateStock(updateStockInput: UpdateStockInput!): Stock!
   updateUser(data: UpdateUserInput!): User!
+}
+
+type Order {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  dateDelivered: Date
+  facilityId: String!
+  id: ID!
+  lineItems: [Lineitem]
+  notes: String
+  scheduledPackDate: Date
+  scheduledShipDate: Date
+  status: Status!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
 }
 
 """
@@ -210,9 +359,17 @@ type Query {
   facility(findOneFacilityInput: String!): Facility!
   hello(name: String!): String!
   helloWorld: String!
+  labtest(findOneLabtestInput: String!): Labtest!
+  labtests: [Labtest!]!
+  lineitem(findOneLineItemInput: String!): Lineitem!
+  lineitems: [Lineitem!]!
   me: User!
+  order(findOneOrderInput: String!): Order!
+  orders: [Order!]!
   post(postId: String!): Post!
   publishedPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, query: String, skip: Int): PostConnection!
+  stock(findOneStockInput: String!): Stock!
+  stocks: [Stock!]!
   userPosts(userId: String!): [Post!]!
 }
 
@@ -227,6 +384,32 @@ input SignupInput {
   firstname: String
   lastname: String
   password: String!
+}
+
+"""Order status"""
+enum Status {
+  CLOSED
+  COMPLETED
+  DELIVERED
+  OPEN
+  PACKED
+  SHIPPED
+}
+
+type Stock {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  id: ID!
+  itemType: String!
+  labTestId: String
+  lineItems: [Lineitem]
+  priceDefault: Int
+  quantity: Int
+  strain: String!
+  uom: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
 }
 
 type Subscription {
@@ -291,6 +474,80 @@ input UpdateFacilityInput {
   """Identifies the date and time when the object was last updated."""
   updatedAt: Date
   zip: String
+}
+
+input UpdateLabtestInput {
+  cbdPercent: String
+
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  current: Boolean
+  harvestDate: Date
+  harvestLocation: String
+  id: ID
+  labFacilityLicenseNumber: String
+  labFacilityName: String
+  labTestExternalId: String
+  producerLicenseName: String
+  producerLicenseNumber: String
+  productCategoryName: String
+  productName: String
+  sourcePackageLabel: String
+  terpenePercent: Int
+  testBatch: String
+  testComment: String
+  testPassed: Boolean
+  testPerformedDate: Date
+  thcPercent: Int
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
+input UpdateLineitemInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  id: ID
+  itemType: String
+  orderId: String
+  packedStatus: Boolean
+  ppu: Int
+  quantity: Int
+  stockId: String
+  strain: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
+input UpdateOrderInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  dateDelivered: Date
+  facilityId: String
+  id: ID
+  notes: String
+  scheduledPackDate: Date
+  scheduledShipDate: Date
+  status: Status
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
+}
+
+input UpdateStockInput {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date
+  id: ID
+  itemType: String
+  labTestId: String
+  priceDefault: Int
+  quantity: Int
+  strain: String
+  uom: String
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date
 }
 
 input UpdateUserInput {

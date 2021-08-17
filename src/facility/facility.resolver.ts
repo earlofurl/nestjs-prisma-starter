@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { PrismaService } from '../prisma/prisma.service';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { FacilityService } from './facility.service';
 import { Facility } from './entities/facility.entity';
 import { CreateFacilityInput } from './dto/create-facility.input';
@@ -10,7 +18,10 @@ import { Prisma } from '@prisma/client';
 @Resolver(() => Facility)
 @UseGuards(GqlAuthGuard)
 export class FacilityResolver {
-  constructor(private readonly facilityService: FacilityService) {}
+  constructor(
+    private facilityService: FacilityService,
+    private prisma: PrismaService
+  ) {}
 
   @Mutation(() => Facility)
   createFacility(
@@ -48,5 +59,19 @@ export class FacilityResolver {
     removeOneFacilityInput: Prisma.FacilityWhereUniqueInput
   ) {
     return this.facilityService.remove(removeOneFacilityInput);
+  }
+
+  @ResolveField('orders')
+  orders(@Parent() facility: Facility) {
+    return this.prisma.facility
+      .findUnique({ where: { id: facility.id } })
+      .orders();
+  }
+
+  @ResolveField('contacts')
+  contacts(@Parent() facility: Facility) {
+    return this.prisma.facility
+      .findUnique({ where: { id: facility.id } })
+      .contacts();
   }
 }

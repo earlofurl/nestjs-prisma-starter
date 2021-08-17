@@ -1,5 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseModel } from '../../models/base.model';
+import { Order } from '../../order/entities/order.entity';
+import { Contact } from '../../contact/entities/contact.entity';
 
 @ObjectType()
 export class Facility extends BaseModel {
@@ -16,7 +18,8 @@ export class Facility extends BaseModel {
   county?: string;
   notes?: string;
   customerId: string;
-  // TODO: Implement orders and contacts after resources are added.
-  // orders
-  // contacts
+  @Field(() => [Order], { nullable: 'itemsAndList' })
+  orders?: [Order];
+  @Field(() => [Contact], { nullable: 'itemsAndList' })
+  contacts?: [Contact];
 }
