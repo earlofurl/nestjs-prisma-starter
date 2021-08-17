@@ -1,4 +1,4 @@
-import { InputType, Field, ID } from '@nestjs/graphql';
+import { InputType, Field, ID, Float } from '@nestjs/graphql';
 
 @InputType()
 export class CreateStockInput {
@@ -15,8 +15,10 @@ export class CreateStockInput {
   updatedAt?: Date;
   strain: string;
   itemType: string;
+  @Field(type => Float)
   quantity?: number;
   uom?: string;
+  @Field(type => Float)
   priceDefault?: number;
   labTestId?: string;
   // TODO: Add lineItems to object when lineItem resource created.

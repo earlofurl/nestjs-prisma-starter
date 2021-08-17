@@ -96,12 +96,12 @@ input CreateLabtestInput {
   productCategoryName: String
   productName: String
   sourcePackageLabel: String
-  terpenePercent: Int
+  terpenePercent: Float
   testBatch: String
   testComment: String
   testPassed: Boolean
   testPerformedDate: Date
-  thcPercent: Int
+  thcPercent: Float
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: Date
@@ -114,8 +114,8 @@ input CreateLineitemInput {
   itemType: String!
   orderId: String
   packedStatus: Boolean!
-  ppu: Int!
-  quantity: Int!
+  ppu: Float!
+  quantity: Float!
   stockId: String
   strain: String!
 
@@ -149,8 +149,8 @@ input CreateStockInput {
   id: ID
   itemType: String!
   labTestId: String
-  priceDefault: Int
-  quantity: Int
+  priceDefault: Float
+  quantity: Float
   strain: String!
   uom: String
 
@@ -217,12 +217,12 @@ type Labtest {
   productName: String
   sourcePackageLabel: String
   stock: [Stock]
-  terpenePercent: Int
+  terpenePercent: Float
   testBatch: String
   testComment: String
   testPassed: Boolean
   testPerformedDate: Date
-  thcPercent: Int
+  thcPercent: Float
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: Date!
@@ -235,8 +235,8 @@ type Lineitem {
   itemType: String!
   orderId: String
   packedStatus: Boolean!
-  ppu: Int!
-  quantity: Int!
+  ppu: Float!
+  quantity: Float!
   stockId: String
   strain: String!
 
@@ -403,8 +403,8 @@ type Stock {
   itemType: String!
   labTestId: String
   lineItems: [Lineitem]
-  priceDefault: Int
-  quantity: Int
+  priceDefault: Float
+  quantity: Float
   strain: String!
   uom: String
 
@@ -493,12 +493,12 @@ input UpdateLabtestInput {
   productCategoryName: String
   productName: String
   sourcePackageLabel: String
-  terpenePercent: Int
+  terpenePercent: Float
   testBatch: String
   testComment: String
   testPassed: Boolean
   testPerformedDate: Date
-  thcPercent: Int
+  thcPercent: Float
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: Date
@@ -511,8 +511,8 @@ input UpdateLineitemInput {
   itemType: String
   orderId: String
   packedStatus: Boolean
-  ppu: Int
-  quantity: Int
+  ppu: Float
+  quantity: Float
   stockId: String
   strain: String
 
@@ -541,8 +541,8 @@ input UpdateStockInput {
   id: ID
   itemType: String
   labTestId: String
-  priceDefault: Int
-  quantity: Int
+  priceDefault: Float
+  quantity: Float
   strain: String
   uom: String
 

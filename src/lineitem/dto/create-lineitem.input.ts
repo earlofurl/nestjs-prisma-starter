@@ -1,4 +1,4 @@
-import { InputType, Field, ID } from '@nestjs/graphql';
+import { InputType, Field, ID, Float } from '@nestjs/graphql';
 
 @InputType()
 export class CreateLineitemInput {
@@ -15,7 +15,9 @@ export class CreateLineitemInput {
   updatedAt?: Date;
   strain: string;
   itemType: string;
+  @Field((type) => Float)
   quantity: number;
+  @Field((type) => Float)
   ppu: number;
   stockId?: string;
   orderId?: string;

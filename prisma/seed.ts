@@ -47,6 +47,108 @@ async function main() {
     },
   });
 
+  const customer1 = await prisma.customer.create({
+    data: {
+      id: 'cksfhwuyp0028t8ugl8lv4dtr',
+      name: 'OBB',
+      notes: 'They love warm beans',
+      photoPrimary: 'pending',
+    },
+  });
+
+  const facility1 = await prisma.facility.create({
+    data: {
+      address1: '123 Meth Ave',
+      address2: '',
+      city: 'Gresham',
+      county: 'Multnomah',
+      customerId: 'cksfhwuyp0028t8ugl8lv4dtr',
+      id: 'cksfhxems0051t8ugo1v6skf2',
+      license: '050-WHATEVER',
+      name: "Oregon's Best Buds",
+      notes: 'The cool beans store',
+      primaryContactName: 'Dylan Tyson',
+      primaryEmail: 'obb@hotmail.com',
+      primaryPhone: '123-456-7890',
+      state: 'OR',
+      zip: '97000',
+    },
+  });
+
+  const contact1 = await prisma.contact.create({
+    data: {
+      emailAddress: 'warmbeans@hotmail.com',
+      facilityId: 'cksfhxems0051t8ugo1v6skf2',
+      firstName: 'Dylan',
+      lastName: 'Tyson',
+      notes: 'The ultimate bean warmer.',
+      primaryPhone: '666-777-9987',
+      pronouns: 'He/Him',
+      secondaryPhone: '',
+    },
+  });
+
+  const labTest1 = await prisma.labTest.create({
+    data: {
+      cbdPercent: '0.12',
+      createdAt: '2021-08-17T03:39:06.993Z',
+      current: true,
+      harvestDate: null,
+      harvestLocation: 'Field',
+      id: 'cksfioay90013d4ugq9pt5n60',
+      labFacilityLicenseNumber: '010-SOMETHING',
+      labFacilityName: 'Juniper Analytics',
+      labTestExternalId: '20JA1051.01',
+      producerLicenseName: 'Moto Perpetuo Farm',
+      producerLicenseNumber: '020-FARMTIME',
+      productCategoryName: 'Buds',
+      productName: 'Flower - Dutch Treat',
+      sourcePackageLabel: '1A40006211',
+      terpenePercent: 2.11,
+      testBatch: '20-M-A',
+      testComment: 'This is a test',
+      testPassed: true,
+      testPerformedDate: null,
+      thcPercent: 22.25,
+      updatedAt: '2021-08-17T03:39:06.994Z',
+    },
+  });
+
+  const stock1 = await prisma.stock.create({
+    data: {
+      id: 'cksfiqo780004swugikz0tu1e',
+      itemType: 'Buds',
+      labTestId: 'cksfioay90013d4ugq9pt5n60',
+      priceDefault: 700,
+      quantity: 5,
+      strain: 'Dutch Treat',
+      uom: 'Pounds',
+    },
+  });
+
+  const order1 = await prisma.order.create({
+    data: {
+      dateDelivered: '',
+      facilityId: 'cksfhxems0051t8ugo1v6skf2',
+      notes: 'First Test Order',
+      scheduledPackDate: '20200910T000000-0800',
+      scheduledShipDate: '20200911T000000-0800',
+      status: 'OPEN',
+    },
+  });
+
+  const lineItem1 = await prisma.lineItem.create({
+    data: {
+      orderId: 'cksfiua4b0004hwugtdzypye7',
+      packedStatus: true,
+      ppu: 650,
+      quantity: 1,
+      stockId: 'cksfiqo780004swugikz0tu1e',
+      strain: 'Dutch Treat',
+      itemType: 'Buds',
+    },
+  });
+
   console.log({ user1, user2 });
 }
 
