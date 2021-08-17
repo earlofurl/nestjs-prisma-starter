@@ -21,10 +21,10 @@ export class CreateLabtestInput {
   testPerformedDate?: Date;
   testPassed?: boolean;
   testComment?: string;
-  @Field(type => Float)
+  @Field((type) => Float)
   thcPercent?: number;
   cbdPercent?: string;
-  @Field(type => Float)
+  @Field((type) => Float)
   terpenePercent?: number;
   testBatch?: string;
   harvestDate?: Date;

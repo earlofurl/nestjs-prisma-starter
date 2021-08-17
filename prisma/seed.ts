@@ -9,7 +9,7 @@ async function main() {
 
   const user1 = await prisma.user.create({
     data: {
-      email: 'lisa@simpson.com',
+      email: 'lisa1@simpson.com',
       firstname: 'Lisa',
       lastname: 'Simpson',
       password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
@@ -25,7 +25,7 @@ async function main() {
   });
   const user2 = await prisma.user.create({
     data: {
-      email: 'bart@simpson.com',
+      email: 'bart2@simpson.com',
       firstname: 'Bart',
       lastname: 'Simpson',
       role: 'ADMIN',
@@ -93,7 +93,7 @@ async function main() {
       cbdPercent: '0.12',
       createdAt: '2021-08-17T03:39:06.993Z',
       current: true,
-      harvestDate: null,
+      harvestDate: '2021-08-01T03:39:06.994Z',
       harvestLocation: 'Field',
       id: 'cksfioay90013d4ugq9pt5n60',
       labFacilityLicenseNumber: '010-SOMETHING',
@@ -108,7 +108,7 @@ async function main() {
       testBatch: '20-M-A',
       testComment: 'This is a test',
       testPassed: true,
-      testPerformedDate: null,
+      testPerformedDate: '2021-08-17T03:39:06.994Z',
       thcPercent: 22.25,
       updatedAt: '2021-08-17T03:39:06.994Z',
     },
@@ -128,18 +128,19 @@ async function main() {
 
   const order1 = await prisma.order.create({
     data: {
-      dateDelivered: '',
+      id: 'dksfhxexs0151t8ug01v6skf3',
+      dateDelivered: '2021-08-17T03:39:06.994Z',
       facilityId: 'cksfhxems0051t8ugo1v6skf2',
       notes: 'First Test Order',
-      scheduledPackDate: '20200910T000000-0800',
-      scheduledShipDate: '20200911T000000-0800',
+      scheduledPackDate: '2021-08-22T03:39:06.994Z',
+      scheduledShipDate: '2021-08-23T03:39:06.994Z',
       status: 'OPEN',
     },
   });
 
   const lineItem1 = await prisma.lineItem.create({
     data: {
-      orderId: 'cksfiua4b0004hwugtdzypye7',
+      orderId: 'dksfhxexs0151t8ug01v6skf3',
       packedStatus: true,
       ppu: 650,
       quantity: 1,
