@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { StockService } from './stock.service';
 import { Stock } from './entities/stock.entity';
 import { CreateStockInput } from './dto/create-stock.input';
@@ -6,11 +14,15 @@ import { UpdateStockInput } from './dto/update-stock.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../guards/gql-auth.guard';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Resolver(() => Stock)
 @UseGuards(GqlAuthGuard)
 export class StockResolver {
-  constructor(private readonly stockService: StockService) {}
+  constructor(
+    private stockService: StockService,
+    private prisma: PrismaService
+  ) {}
 
   @Mutation(() => Stock)
   createStock(@Args('createStockInput') createStockInput: CreateStockInput) {
@@ -41,5 +53,12 @@ export class StockResolver {
     removeOneStockInput: Prisma.StockWhereUniqueInput
   ) {
     return this.stockService.remove(removeOneStockInput);
+  }
+
+  @ResolveField('lineItems')
+  lineItems(@Parent() stock: Stock) {
+    return this.prisma.stock
+      .findUnique({ where: { id: stock.id } })
+      .lineItems();
   }
 }

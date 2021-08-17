@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Parent,
+  ResolveField,
+} from '@nestjs/graphql';
 import { LabtestService } from './labtest.service';
 import { Labtest } from './entities/labtest.entity';
 import { CreateLabtestInput } from './dto/create-labtest.input';
@@ -6,11 +13,15 @@ import { UpdateLabtestInput } from './dto/update-labtest.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../guards/gql-auth.guard';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Resolver(() => Labtest)
 @UseGuards(GqlAuthGuard)
 export class LabtestResolver {
-  constructor(private readonly labtestService: LabtestService) {}
+  constructor(
+    private labtestService: LabtestService,
+    private prisma: PrismaService
+  ) {}
 
   @Mutation(() => Labtest)
   createLabtest(
@@ -48,5 +59,12 @@ export class LabtestResolver {
     removeLabtestInput: Prisma.LabTestWhereUniqueInput
   ) {
     return this.labtestService.remove(removeLabtestInput);
+  }
+
+  @ResolveField('stock')
+  stock(@Parent() labTest: Labtest) {
+    return this.prisma.labTest
+      .findUnique({ where: { id: labTest.id } })
+      .stock();
   }
 }
