@@ -22,10 +22,13 @@ export class FacilityService {
     return this.prisma.facility.findMany();
   }
 
-  findOne(id: Prisma.FacilityWhereUniqueInput) {
-    // `This action returns a #${id} facility`
+  findOne(facilityId: Prisma.FacilityWhereUniqueInput) {
+    // `This action returns a #${id} facility
     return this.prisma.facility.findUnique({
-      where: id,
+      // TODO: Figure out how to tell Prisma that facilityId is definitely a string.
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      where: { id: facilityId },
     });
   }
 

@@ -91,9 +91,9 @@ async function main() {
   const labTest1 = await prisma.labTest.create({
     data: {
       cbdPercent: '0.12',
-      createdAt: '2021-08-17T03:39:06.993Z',
+      createdAt: '2021-08-01T00:00:00-04:00',
       current: true,
-      harvestDate: '2021-08-01T03:39:06.994Z',
+      harvestDate: '2020-08-01T00:00:00-04:00',
       harvestLocation: 'Field',
       id: 'cksfioay90013d4ugq9pt5n60',
       labFacilityLicenseNumber: '010-SOMETHING',
@@ -108,9 +108,9 @@ async function main() {
       testBatch: '20-M-A',
       testComment: 'This is a test',
       testPassed: true,
-      testPerformedDate: '2021-08-17T03:39:06.994Z',
+      testPerformedDate: '2021-07-01T00:00:00-04:00',
       thcPercent: 22.25,
-      updatedAt: '2021-08-17T03:39:06.994Z',
+      updatedAt: '2021-08-01T00:00:00-04:00',
     },
   });
 
@@ -129,11 +129,11 @@ async function main() {
   const order1 = await prisma.order.create({
     data: {
       id: 'dksfhxexs0151t8ug01v6skf3',
-      dateDelivered: '2021-08-17T03:39:06.994Z',
+      dateDelivered: '2021-08-18T00:00:00-04:00',
       facilityId: 'cksfhxems0051t8ugo1v6skf2',
       notes: 'First Test Order',
-      scheduledPackDate: '2021-08-22T03:39:06.994Z',
-      scheduledShipDate: '2021-08-23T03:39:06.994Z',
+      scheduledPackDate: '2021-08-17T00:00:00-04:00',
+      scheduledShipDate: '2021-08-17T13:00:00-04:00',
       status: 'OPEN',
     },
   });
