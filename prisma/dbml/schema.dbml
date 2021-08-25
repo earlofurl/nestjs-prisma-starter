@@ -33,6 +33,7 @@ Table Customer {
   photoPrimary String
   notes String
   facilities Facility [not null]
+  orders Order [not null]
 }
 
 Table Facility {
@@ -53,8 +54,8 @@ Table Facility {
   notes String
   customer Customer [not null]
   customerId String [not null]
-  orders Order [not null]
   contacts Contact [not null]
+  orders Order [not null]
 }
 
 Table Contact {
@@ -123,6 +124,8 @@ Table Order {
   notes String
   facility Facility [not null]
   facilityId String [not null]
+  customer Customer [not null]
+  customerId String [not null]
   lineItems LineItem [not null]
 }
 
@@ -165,5 +168,7 @@ Ref: LineItem.stockId > Stock.id
 Ref: LineItem.orderId > Order.id
 
 Ref: Order.facilityId > Facility.id
+
+Ref: Order.customerId > Customer.id
 
 Ref: Stock.labTestId > LabTest.id

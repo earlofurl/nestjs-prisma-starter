@@ -43,6 +43,7 @@ model Customer {
   photoPrimary                               String?
   notes                                      String?
   facilities                                 Facility[]
+  orders                                     Order[]
 }
 
 model Facility {
@@ -63,8 +64,8 @@ model Facility {
   notes                                      String?
   customer                                   Customer   @relation(fields: [customerId], references: [id])
   customerId                                 String
-  orders                                     Order[]
   contacts                                   Contact[]
+  orders                                     Order[]
 }
 
 model Contact {
@@ -133,6 +134,8 @@ model Order {
   notes                       String?
   facility                    Facility                     @relation(fields: [facilityId], references: [id])
   facilityId                  String
+  customer                                   Customer   @relation(fields: [customerId], references: [id])
+  customerId                                 String
   lineItems                   LineItem[]
 }
 

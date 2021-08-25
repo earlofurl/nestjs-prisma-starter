@@ -46,6 +46,15 @@ async function main() {
       },
     },
   });
+  const user3 = await prisma.user.create({
+    data: {
+      email: 'freemail@gmail.com',
+      firstname: 'Dingus',
+      lastname: 'Dungus',
+      password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
+      role: 'USER',
+    },
+  });
 
   const customer1 = await prisma.customer.create({
     data: {
@@ -131,6 +140,7 @@ async function main() {
       id: 'dksfhxexs0151t8ug01v6skf3',
       dateDelivered: '2021-08-18T00:00:00-04:00',
       facilityId: 'cksfhxems0051t8ugo1v6skf2',
+      customerId: 'cksfhwuyp0028t8ugl8lv4dtr',
       notes: 'First Test Order',
       scheduledPackDate: '2021-08-17T00:00:00-04:00',
       scheduledShipDate: '2021-08-17T13:00:00-04:00',

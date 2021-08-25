@@ -24,6 +24,7 @@ export class Order extends BaseModel {
   status: Status;
   notes?: string;
   facilityId: string;
+  customerId: string;
   @Field((type) => [Lineitem], { nullable: 'itemsAndList'})
   lineItems?: [Lineitem];
 }

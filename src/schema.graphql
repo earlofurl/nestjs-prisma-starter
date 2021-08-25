@@ -126,6 +126,7 @@ input CreateLineitemInput {
 input CreateOrderInput {
   """Identifies the date and time when the object was created."""
   createdAt: Date
+  customerId: String!
   dateDelivered: Date
   facilityId: String!
   id: ID
@@ -165,6 +166,7 @@ type Customer {
   id: ID!
   name: String!
   notes: String
+  orders: [Order!]
   photoPrimary: String
 
   """Identifies the date and time when the object was last updated."""
@@ -282,6 +284,7 @@ type Mutation {
 type Order {
   """Identifies the date and time when the object was created."""
   createdAt: Date!
+  customerId: String!
   dateDelivered: Date
   facilityId: String!
   id: ID!
@@ -364,8 +367,10 @@ type Query {
   lineitem(findOneLineItemInput: String!): Lineitem!
   lineitems: [Lineitem!]!
   me: User!
+  openOrdersByCustomer(customerId: String!): [Order!]!
   order(findOneOrderInput: String!): Order!
   orders: [Order!]!
+  ordersByCustomer(customerId: String!): [Order!]!
   post(postId: String!): Post!
   publishedPosts(after: String, before: String, first: Int, last: Int, orderBy: PostOrder, query: String, skip: Int): PostConnection!
   stock(findOneStockInput: String!): Stock!
@@ -523,6 +528,7 @@ input UpdateLineitemInput {
 input UpdateOrderInput {
   """Identifies the date and time when the object was created."""
   createdAt: Date
+  customerId: String
   dateDelivered: Date
   facilityId: String
   id: ID

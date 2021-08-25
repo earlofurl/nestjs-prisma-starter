@@ -14,6 +14,8 @@ import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../guards/gql-auth.guard';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { Order } from 'src/order/entities/order.entity';
+import { CustomerIdArgs } from '../models/args/customer-id.args';
 
 @Resolver(() => Customer)
 @UseGuards(GqlAuthGuard)
@@ -43,6 +45,20 @@ export class CustomerResolver {
     return this.customerService.findOne(findOneCustomerInput);
   }
 
+  @Query(() => [Order])
+  ordersByCustomer(@Args() id: CustomerIdArgs) {
+    return this.prisma.customer
+      .findUnique({ where: { id: id.customerId } })
+      .orders();
+  }
+
+  @Query(() => [Order])
+  openOrdersByCustomer(@Args() id: CustomerIdArgs) {
+    return this.prisma.customer
+      .findUnique({ where: { id: id.customerId } })
+      .orders({ where: { status: 'OPEN' } });
+  }
+
   @Mutation(() => Customer)
   updateCustomer(
     @Args('updateCustomerInput') updateCustomerInput: UpdateCustomerInput
@@ -59,6 +75,13 @@ export class CustomerResolver {
     removeOneCustomerInput: Prisma.CustomerWhereUniqueInput
   ) {
     return this.customerService.remove(removeOneCustomerInput);
+  }
+
+  @ResolveField('orders')
+  orders(@Parent() customer: Customer) {
+    return this.prisma.customer
+      .findUnique({ where: { id: customer.id } })
+      .orders();
   }
 
   @ResolveField('facilities')

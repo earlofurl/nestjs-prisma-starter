@@ -20,5 +20,6 @@ export class CreateOrderInput {
   status: Status;
   notes?: string;
   facilityId: string;
+  customerId: string;
   // TODO: add lineItems
 }
